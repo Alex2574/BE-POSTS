@@ -2,20 +2,21 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var posts = require('./routes/posts');
 var app = express();
 var cors = require('cors');
+const postRouter = require('./routes/post');
 
 app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', posts);
+
+app.use('/', postRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
+ let err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
